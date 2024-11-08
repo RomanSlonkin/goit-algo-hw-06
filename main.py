@@ -19,10 +19,6 @@ class Phone(Field):
             raise ValueError("Phone number must be 10 numbers")
         super().__init__(value)
 
-    def __eq__(self, other):
-        return self.value == other.value
-
-
 class Record:
     def __init__(self, name):
         self.name = Name(name)
@@ -46,15 +42,19 @@ class Record:
             old_phone = Phone(old_phone)
         if isinstance(new_phone, str):
             new_phone = Phone(new_phone)
-        if old_phone in self.phones:
-            self.phones[self.phones.index(old_phone)] = new_phone
-        else:
-            raise ValueError("There in no such phone in the contact list.")
+        for idx, phone in enumerate(self.phones):
+            if phone.value == old_phone.value:
+                self.phones[idx] = new_phone
+                return
+        raise ValueError("There in no such phone in the contact list.")
 
     def find_phone(self, phone):
         if isinstance(phone, str):
             phone = Phone(phone)
-        return phone in self.phones
+        for p in self.phones:
+            if p.value == phone.value:
+                return p.value
+        raise ValueError("There is no such phone in the contact list.")
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
