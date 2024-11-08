@@ -19,6 +19,10 @@ class Phone(Field):
             raise ValueError("Phone number must be 10 numbers")
         super().__init__(value)
 
+    def __eq__(self, other):
+        return self.value == other.value
+
+
 class Record:
     def __init__(self, name):
         self.name = Name(name)
