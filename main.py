@@ -25,36 +25,31 @@ class Record:
         self.phones = []
     
     def add_phone(self, phone):
-        if isinstance(phone, str):
-            phone = Phone(phone)
+        phone = Phone(phone)
         self.phones.append(phone)
 
     def remove_phone(self, phone):
-        if isinstance(phone, str):
-            phone = Phone(phone)
-        if phone in self.phones:
-            self.phones.remove(phone)
-        else:
-            raise ValueError("There is no such phone in the contact list.")
+        for p in self.phones:
+            if p.value == phone:
+                self.phones.remove(p)
+        return("There is no such phone in the contact list.")
 
     def edit_phone(self, old_phone, new_phone):
-        if isinstance(old_phone, str):
-            old_phone = Phone(old_phone)
-        if isinstance(new_phone, str):
-            new_phone = Phone(new_phone)
+        old_phone = Phone(old_phone)
+        new_phone = Phone(new_phone)
         for idx, phone in enumerate(self.phones):
             if phone.value == old_phone.value:
                 self.phones[idx] = new_phone
                 return
-        raise ValueError("There in no such phone in the contact list.")
+        return "There is no such phone in the contact list."
+        
 
     def find_phone(self, phone):
-        if isinstance(phone, str):
-            phone = Phone(phone)
+        phone = Phone(phone)
         for p in self.phones:
             if p.value == phone.value:
-                return p.value
-        raise ValueError("There is no such phone in the contact list.")
+                return phone
+        return None
 
     def __str__(self):
         return f"Contact name: {self.name.value}, phones: {'; '.join(p.value for p in self.phones)}"
@@ -67,7 +62,7 @@ class AddressBook(UserDict):
         if name in self.data:
             del self.data[name]
         else:
-            raise ValueError("There is no contact with this name.")
+             return "There is no contact with this name."
 
     def find(self, name):
         return self.data.get(name, None)
@@ -113,6 +108,7 @@ print(book)
 # Знаходження та редагування телефону для John
 john = book.find("John")
 john.edit_phone("1234567890", "1112223333")
+john.remove_phone("1112223333")
 
 print(john)  # Виведення: Contact name: John, phones: 1112223333; 5555555555
 
