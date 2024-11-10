@@ -31,7 +31,7 @@ class Record:
     def remove_phone(self, phone):
         for p in self.phones:
             if p.value == phone:
-                self.phones.remove(p)
+                return self.phones.remove(p)
         return("There is no such phone in the contact list.")
 
     def edit_phone(self, old_phone, new_phone):
@@ -41,8 +41,7 @@ class Record:
             if phone.value == old_phone.value:
                 self.phones[idx] = new_phone
                 return
-            else:
-                raise ValueError("There is no such phone in the contact list.")     
+        raise ValueError("There is no such phone in the contact list.")     
 
     def find_phone(self, phone):
         phone = Phone(phone)
