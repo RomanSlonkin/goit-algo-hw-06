@@ -41,14 +41,14 @@ class Record:
             if phone.value == old_phone.value:
                 self.phones[idx] = new_phone
                 return
-        return "There is no such phone in the contact list."
-        
+            else:
+                raise ValueError("There is no such phone in the contact list.")     
 
     def find_phone(self, phone):
         phone = Phone(phone)
         for p in self.phones:
             if p.value == phone.value:
-                return phone
+                return p
         return None
 
     def __str__(self):
